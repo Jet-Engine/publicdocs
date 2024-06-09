@@ -1,24 +1,24 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "PulsejetDB",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/pdark.png",
+    "light": "/logo/plight.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#45a1a4",
+    "light": "#45a1a4",
+    "dark": "#45a1a4",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#45a1a4",
+      "to": "#45a1a4"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:info@jetengine.tech"
     }
   ],
   "topbarCtaButton": {
@@ -87,5 +87,6 @@
     "x": "https://x.com/mintlify",
     "github": "https://github.com/mintlify",
     "linkedin": "https://www.linkedin.com/company/mintsearch"
-  }
+  },
+  "backgroundImage": "/logo/pulsejetdb_trans.png"
 }
