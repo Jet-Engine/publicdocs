@@ -1,5 +1,5 @@
 ---
-title: PulsejetDB — Vector database for rapid prototyping
+title: PulsejetDB — High-Performance Vector Database for Rapid Prototyping
 sidebarTitle: Introduction
 description: 'PulsejetDB is high performance, and developer experience oriented vector database.'
 icon: 'house'
@@ -16,9 +16,18 @@ icon: 'house'
   alt="Hero Dark"
 />
 
-## Setting up
+## What is PulsejetDB?
 
-The first step to world-class documentation is setting up your editing environments.
+PulsejetDB is vector storage where you can use it for both **rapid prototyping** and also **enterprise grade deployment**
+with a simple lift-and-shift approach.
+We want you to spend more time on building, rather spending time on setting up the infrastructure.
+
+We are committed to make **high-performance database system** with persistence as it's first class citizen.
+In addition to all, we provide various index types and custom indexes developed in-house for your workloads.
+At this time of writing, we are developing our own index for your vector operations to have a balanced triple of:
+* Search Accuracy
+* Vector Compression
+* Search Speed
 
 <CardGroup cols={2}>
   <Card
@@ -36,6 +45,45 @@ The first step to world-class documentation is setting up your editing environme
     Preview your changes before you push to make sure they're perfect
   </Card>
 </CardGroup>
+
+## Use Cases
+
+Common applications of PulsejetDB include AI and LLM use cases, machine learning use cases, and more. See a complete list with links below.
+
+<AccordionGroup>
+
+  <Accordion title="RAG Development">
+    This section covers use cases that employ the [FINETUNE](/mindsdb_sql/sql/api/finetune) command:
+    
+    - [Fine-tuning of Mistral models](/use-cases/automated_finetuning/anyscale)
+    - [Fine-tuning of OpenAI models](/use-cases/automated_finetuning/openai)
+    - [Fine-tuning of classification models](/use-cases/automated_finetuning/classification)
+    - [Fine-tuning of regression models](/use-cases/automated_finetuning/regression)
+
+    Learn more about [use cases here](/use-cases/automated_finetuning).
+  </Accordion>
+
+  <Accordion title="Vector Serving">
+    This section explains how to create and deploy AI agents:
+    
+    - [Agents](/mindsdb_sql/agents/agent)
+    - [Skills](/mindsdb_sql/agents/agent#create-skills)
+    - [Knowledge bases](/mindsdb_sql/agents/knowledge-bases)
+    - [Chatbots](/mindsdb_sql/agents/chatbot)
+
+    Learn more about [use cases here](/use-cases/ai_agents).
+  </Accordion>
+
+  <Accordion title="AI Workflow Automation">
+    This section covers the following use cases:
+    
+    - [Semantic search](/use-cases/ai-powered_data_retrieval/semantic_search)
+    - [Embeddings models](/integrations/ai-engines/openai#model-modes)
+    - [Recommenders](/use-cases/ai-powered_data_retrieval/recommenders)
+
+    Learn more about [use cases here](/use-cases/ai-powered_data_retrieval).
+  </Accordion>
+</AccordionGroup>
 
 ## Make it yours
 

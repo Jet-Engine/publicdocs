@@ -32,6 +32,10 @@
   },
   "tabs": [
     {
+      "name": "Design & Concepts",
+      "url": "design"
+    },
+    {
       "name": "REST API",
       "url": "api-reference"
     }
@@ -65,6 +69,7 @@
           "pages": [
             "setup/self-hosted/python",
             "setup/self-hosted/docker",
+            "setup/cloud/pulsejet-cloud",
             "setup/cloud/aws-marketplace",
             "setup/cloud/google-marketplace"
           ],
@@ -90,6 +95,17 @@
         "features/settings",
         "features/navigation",
         "features/reusable-snippets"
+      ]
+    },
+    {
+      "group": "Design & Concepts",
+      "pages": [
+        "design/embeds",
+        "design/datablock",
+        "design/optimizer",
+        "design/search",
+        "design/storage",
+        "design/training_module"
       ]
     },
     {
