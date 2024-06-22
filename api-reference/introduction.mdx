@@ -1,33 +1,61 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'REST API'
+description: 'REST API documentation for PulsejetDB'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+PulsejetDB provides REST API endpoints for testing and trial purposes. REST API isn't meant for performance oriented use cases.
 
-## Welcome
+This section introduces REST API endpoints provided by PulsejetDB to operate on vectors.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Follow these steps to get started:
+
+<Steps>
+  <Step title="Set up the development environment">
+    Learn more about [usage here](/rest/usage). 
+  </Step>
+  <Step title="Connect to a local or remote instance.">
+    Connect your data source to MindsDB via [this endpoint](/rest/databases/create-databases).<br></br>
+    Explore all available [data sources here](/integrations/data-overview).
+  </Step>
+  <Step title="Create and deploy an AI/ML model">
+    Create, train, and deploy AI/ML models within MindsDB via [this endpoint](/rest/models/train-model).<br></br>
+    Explore all available [AI engines here](/integrations/ai-overview).
+  </Step>
+  <Step title="Get predictions">
+    Query for predictions via [this endpoint](/rest/models/query-model).
+  </Step>
+</Steps>
+
+## Operation Endpoints
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="Collection Operation Endpoints"
+  icon="rectangle-history"
+  href="https://raw.githubusercontent.com/Jet-Engine/publicdocs/main/apicol/openapi.yml"
 >
   View the OpenAPI specification file
 </Card>
 
+<Card
+  title="Embed Operation Endpoints"
+  icon="arrows-to-circle"
+  href="https://raw.githubusercontent.com/Jet-Engine/publicdocs/main/apicol/openapi.yml"
+>
+  View the OpenAPI specification file
+</Card>
+
+<Card
+  title="Search Operation Endpoints"
+  icon="magnifying-glass-waveform"
+  href="https://raw.githubusercontent.com/Jet-Engine/publicdocs/main/apicol/openapi.yml"
+>
+  View the OpenAPI specification file
+</Card>
+
+<Note>
+  The REST API endpoints can be used with PulsejetDB running locally at http://127.0.0.1:47044.
+</Note>
+
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
+Currently, PulsejetDB doesn't have any authentication mechanism for its API.

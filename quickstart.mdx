@@ -5,78 +5,62 @@ sidebarTitle: 'Quickstart'
 icon: 'play'
 ---
 
-Before we start, there are two ways to install PulsejetDB:
-* Locally as a package from PyPi. This is local installation and meant to be used for rapid prototyping.
+Before we start, there are three ways to install PulsejetDB:
+* Locally as a [Python package from PyPi](/setup/self-hosted/python). This is local installation and meant to be used for rapid prototyping.
 * Remote as a [Docker](/setup/self-hosted/docker)
+* Cloud with:
+  * Self-hosting with AWS Marketplace (Upcoming)
+  * Self-hosting with Google Marketplace (Upcoming)
 
 
-## Setup your development
+## Client Interface
 
-Learn how to update your docs locally and and deploy them to the public.
-
-### Edit and preview
+Regardless of you will do rapid prototyping or use remote instance to develop your production grade models, you need to install PulsejetDB python package.
 
 <AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
+  <Accordion icon="python" title="Install Python package">
+    Create a virtualenv or in activated virtualenv, issue this command:
+    ```bash
+    pip install pulsejet
+    ```
+    We are making builds for these architectures for local package:
+    * Linux x86_64
+    * MacOS Aarch64
+
+    For people who will always use Remote Installation, we will provide also thin client.
   </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `mint.json` is): ``` mintlify dev ```
+  <Accordion icon="arrow-up-to-arc" title="Import Pulsejet">
+    Import Pulsejet in your Python code like:
+    ```python
+    import pulsejet as pj
+    ```
+    Now you are ready to go to work with either `local` installation or `remote` installation.
   </Accordion>
 </AccordionGroup>
 
-### Deploy your changes
+After following the steps above you are ready to start using PulsejetDB for LLM context development, or for production integration use cases.
 
-<AccordionGroup>
-
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
-
-</AccordionGroup>
-
-## Update your docs
+## Choose your way to develop
 
 Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
 
 <CardGroup>
 
-<Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-  Add flair to your docs with personalized branding.
+<Card title="Local Pulsejet" icon="map-pin" href="/setup/self-hosted/python">
+  Use Local Pulsejet instance without any additional installation or steps.
 </Card>
 
 <Card
-  title="Add API Endpoints"
-  icon="square-code"
-  href="/api-playground/configuration"
+  title="Remote Pulsejet"
+  icon="box-open"
+  href="/setup/self-hosted/docker"
 >
-  Implement your OpenAPI spec and enable API user interaction.
+  Use production grade optimized docker images for remote development.
 </Card>
 
 <Card
-  title="Integrate Analytics"
-  icon="chart-mixed"
+  title="Pulsejet Cloud"
+  icon="cloud"
   href="/analytics/supported-integrations"
 >
   Draw insights from user interactions with your documentation.

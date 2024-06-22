@@ -15,6 +15,11 @@
       "to": "#458da0"
     }
   },
+  "feedback": {
+    "suggestEdit": true,
+    "raiseIssue": true,
+    "thumbsRating": true
+  },
   "topbarLinks": [
     {
       "name": "Support",
@@ -27,7 +32,7 @@
   },
   "tabs": [
     {
-      "name": "API Reference",
+      "name": "REST API",
       "url": "api-reference"
     }
   ],
@@ -55,20 +60,23 @@
       "pages": [
         "introduction",
         "quickstart",
-        "development",
         {
           "group": "Installation",
           "pages": [
+            "setup/self-hosted/python",
             "setup/self-hosted/docker",
             "setup/cloud/aws-marketplace",
-            {
-              "group": "Configuration",
-              "pages": [
-                "setup/config-options",
-                "setup/environment-vars"
-              ]
-            }
-          ]
+            "setup/cloud/google-marketplace"
+          ],
+          "icon": "down-to-bracket"
+        },
+        {
+          "group": "Configuration",
+          "pages": [
+            "setup/config-options",
+            "setup/environment-vars"
+          ],
+          "icon": "screwdriver-wrench"
         }
       ]
     },
@@ -85,7 +93,7 @@
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "REST API",
       "pages": [
         "api-reference/introduction"
       ]
@@ -117,9 +125,9 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://x.com/JetEngine_Tech",
+    "github": "https://github.com/Jet-Engine",
+    "linkedin": "https://www.linkedin.com/company/JetEngine"
   },
   "backgroundImage": "/logo/pulsejetdb_trans.png"
 }
