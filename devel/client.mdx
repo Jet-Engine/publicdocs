@@ -1,5 +1,35 @@
 ---
-title: 'Quickstart - Client'
+title: 'Quickstart - Local Client'
 description: 'Generic usage of sync Python client.'
-icon: 'code'
+icon: 'python'
 ---
+
+After installing and importing client in the code. Now it is time for to start and connect to `local` instance.
+
+```python Create the client
+client = pj.PulsejetClient(location="local")
+```
+
+Above command will launch pulsejet in the background, and connect to it.
+
+Since we will insert some vectors into our storage. We will build `VectorParams` which are indicating our
+vector configuration for our collection.
+
+```python Build vector configuration for our collection
+vector_params = pj.VectorParams(size=128, index_type=pj.IndexType.HNSW)
+```
+
+In the above example, `size` indicates the vector size, and `index_type` is 
+one of the possible indexes that we have documented at [Index Types](/features/index_types).
+
+Let's start with `HNSW` for now.
+
+As a next step let's create a collection. Collections are like tables for us.
+They allow us to organize vectors and their indexes into same location for data locality.
+You can learn more with [storage system doc](design/storage).
+
+```python Create collection
+client.create_collection("sift1m", vector_params)
+```
+
+Now we can take a look to existing collections in this list:

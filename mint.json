@@ -67,7 +67,6 @@
         {
           "group": "Installation",
           "pages": [
-            "setup/self-hosted/python",
             "setup/self-hosted/docker",
             "setup/cloud/pulsejet-cloud",
             "setup/cloud/aws-marketplace",
@@ -89,7 +88,8 @@
             "setup/environment-vars"
           ],
           "icon": "screwdriver-wrench"
-        }
+        },
+        "roadmap"
       ]
     },
     {
