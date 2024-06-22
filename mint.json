@@ -48,6 +48,7 @@
       "url": "https://www.jetengine.tech/company/blog"
     }
   ],
+  "openapi": "/apicol/pulsejet_openapi.yml",
   "navigation": [
     {
       "group": "Get Started",
@@ -90,11 +91,28 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Collection Operations",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/collection/create_collection",
+        "api-reference/collection/update_collection",
+        "api-reference/collection/delete_collection",
+        "api-reference/collection/list_collections"
+      ]
+    },
+    {
+      "group": "Embed Operations",
+      "pages": [
+        "api-reference/embeds/insert_single_embed",
+        "api-reference/embeds/insert_multi_embed",
+        "api-reference/embeds/update_embed",
+        "api-reference/embeds/delete_embeds"
+      ]
+    },
+    {
+      "group": "Search Operations",
+      "pages": [
+        "api-reference/search/search_single_embed",
+        "api-reference/search/search_multi_embeds"
       ]
     }
   ],
