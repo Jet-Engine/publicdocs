@@ -1,9 +1,11 @@
 ---
-title: 'REST API'
+title: 'Introduction'
 description: 'REST API documentation for PulsejetDB'
 ---
 
-PulsejetDB provides REST API endpoints for testing and trial purposes. REST API isn't meant for performance oriented use cases.
+PulsejetDB provides REST API endpoints for **testing** and **trying** purposes.
+
+<Warning>REST API isn't meant for performance oriented use cases.</Warning>
 
 This section introduces REST API endpoints provided by PulsejetDB to operate on vectors.
 
@@ -11,18 +13,16 @@ Follow these steps to get started:
 
 <Steps>
   <Step title="Set up the development environment">
-    Learn more about [usage here](/rest/usage). 
+    Learn more about [installation here](/setup/self-hosted). 
   </Step>
   <Step title="Connect to a local or remote instance.">
-    Connect your data source to MindsDB via [this endpoint](/rest/databases/create-databases).<br></br>
-    Explore all available [data sources here](/integrations/data-overview).
+    Connect your Pulsejet Instance via [local](/setup/self-hosted/python) or [remote](/setup/self-hosted/docker).<br></br>
+    Use `Async` or `Sync` client to connect to your database.<br></br>
+    Please check the [client documentation](/devel/client).
   </Step>
-  <Step title="Create and deploy an AI/ML model">
-    Create, train, and deploy AI/ML models within MindsDB via [this endpoint](/rest/models/train-model).<br></br>
-    Explore all available [AI engines here](/integrations/ai-overview).
-  </Step>
-  <Step title="Get predictions">
-    Query for predictions via [this endpoint](/rest/models/query-model).
+  <Step title="Insert & Search everything">
+    You can search concurrently at the same time for multiple collections and multiple different indexes to harmonize your output.
+    Take a look at the possible [Search Operations](/api-reference/search) to find the most suitable approach for you.
   </Step>
 </Steps>
 

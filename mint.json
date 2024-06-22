@@ -76,6 +76,13 @@
           "icon": "down-to-bracket"
         },
         {
+          "group": "Development",
+          "pages": [
+            "devel/client"
+          ],
+          "icon": "campfire"
+        },
+        {
           "group": "Configuration",
           "pages": [
             "setup/config-options",
