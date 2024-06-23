@@ -4,3 +4,151 @@ description: 'Vector indexing capabilities of PulsejetDB.'
 icon: 'table'
 ---
 
+Pulsejet has 7 types of indexes. These indexes has different characteristics and optimizations based on different input.
+
+<Check> We are working on **custom index implementation** and it will become Pulsejet's de-facto index implementation. </Check>
+
+### Index Types
+
+1. `FlatL2` - Flat Index with L2 distance calculation
+    * It is exact search with L2 (Euclidean Distance).
+2. `FlatIP` - Flat Index with Cosine Similarity (Inner Product) distance
+    * It is exact search with Inner Product
+3. `HNSW` - [Hierarchical Navigable Small Worlds](https://arxiv.org/pdf/1603.09320)
+4. `IVFFlat` - Inverted File Index - Flat
+5. `IVFScalar` - Inverted File Index - Scalar
+6. `IVFPQ` - Inverted File Index - Product Quantized
+7. `OPQPQ` - [Optimized PQ](https://www.microsoft.com/en-us/research/wp-content/uploads/2013/11/pami13opq.pdf) chained with Flat Product Quantization
+
+
+### How to select my index type?
+
+Below you can find how to select which index and their general starting requirements.
+
+<Tip>
+    Whatever your selection will be (unless you don't disable optimizer) your indexes will optimized to better indexes through time by Pulsejet (with given constraints.)
+
+    Learn more about [Optimizer Structure](/design/optimizer).
+</Tip>
+
+<Tabs>
+  <Tab title="FlatL2">
+    First, you can use `FlatL2` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "FlatL2",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    ☝️ Welcome to the content that you can only see inside the first Tab.
+  </Tab>
+  <Tab title="FlatIP">
+    First, you can use `FlatIP` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "FlatIP",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    ✌️ Here's content that's only inside the second Tab.
+  </Tab>
+  <Tab title="HNSW">
+    First, you can use `HNSW` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "HNSW",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    💪 Here's content that's only inside the third Tab.
+  </Tab>
+  <Tab title="IVFFlat">
+    First, you can use `IVFFlat` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "IVFFlat",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    💪 Here's content that's only inside the third Tab.
+  </Tab>
+  <Tab title="IVFScalar">
+    First, you can use `IVFScalar` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "IVFScalar",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    💪 Here's content that's only inside the third Tab.
+  </Tab>
+  <Tab title="IVFPQ">
+    First, you can use `IVFPQ` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "IVFPQ",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    💪 Here's content that's only inside the third Tab.
+  </Tab>
+  <Tab title="OPQPQ">
+    First, you can use `OPQPQ` index at [collection creation](/api-reference/collection/create_collection) with:
+
+    ```json
+    {
+        "name": "sift1m",
+        "vector_config": {
+            "size": 128,
+            "index_type": "OPQPQ",
+            "on_disk": true
+        },
+        "optimizer_config": {}
+    }
+    ```
+
+    💪 Here's content that's only inside the third Tab.
+  </Tab>    
+</Tabs>

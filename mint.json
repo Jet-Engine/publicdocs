@@ -98,13 +98,7 @@
     {
       "group": "Features",
       "pages": [
-        "features/index_types",
-        "features/markdown",
-        "features/code",
-        "features/images",
-        "features/settings",
-        "features/navigation",
-        "features/reusable-snippets"
+        "features/index_types"
       ]
     },
     {
