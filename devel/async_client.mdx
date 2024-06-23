@@ -5,3 +5,128 @@ icon: 'rotate'
 ---
 
 Like our previous [sync Python client](/devel/client), most of the methods are same. Still we will go through the same quickstart but now we will show you couple of extra possibilities of the async client here.
+
+Let's start creating the client
+
+```python Create the client
+client = pj.AsyncPulsejetClient(location="local")
+```
+
+Above command will launch pulsejet in the background, and connect to it.
+
+Since we will insert some vectors into our storage. We will build `VectorParams` which are indicating our
+vector configuration for our collection.
+
+```python Build vector configuration for our collection
+vector_params = pj.VectorParams(size=128, index_type=pj.IndexType.HNSW)
+```
+
+In the above example, `size` indicates the vector size, and `index_type` is 
+one of the possible indexes that we have documented at [Index Types](/features/index_types).
+
+Let's start with `HNSW` for now.
+
+As a next step let's create a collection. Collections are like tables for us.
+They allow us to organize vectors and their indexes into same location for data locality.
+You can learn more with [storage system doc](design/storage).
+
+```python Create collection
+await client.create_collection("sift1m", vector_params)
+```
+
+Now we can take a look to existing collections in this list:
+
+```python List collections
+await client.list_collections(filter=None)
+```
+
+Filter indicates what to filter from the collection. This will give us a list of collections.
+
+Now it is time to download `SIFT1M` dataset to our system as an example:
+
+```python Download and separate Sift1M dataset
+import os.path
+import shutil
+import urllib.request as request
+from contextlib import closing
+import tarfile
+import numpy as np
+
+# first we download the Sift1M dataset
+if not os.path.isfile('sift.tar.gz'):
+    with closing(request.urlopen('ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz')) as r:
+        with open('sift.tar.gz', 'wb') as f:
+            shutil.copyfileobj(r, f)
+
+
+# we unzip the sift
+tar = tarfile.open('sift.tar.gz', "r:gz")
+tar.extractall()
+
+# Let's read fvecs from the dataset
+def read_fvecs(fp):
+    a = np.fromfile(fp, dtype='int32')
+    d = a[0]
+    return a.reshape(-1, d + 1)[:, 1:].copy().view('float32')
+
+# data that we will ingest
+xb = read_fvecs('sift/sift_base.fvecs')  # 1M samples
+# get query vectors
+xq = read_fvecs('./sift/sift_query.fvecs')
+# take one query vector
+xq = xq[0].reshape(1, xq.shape[1])
+# take just 30_000 vectors to ease testing
+xb = xb[:30_000].reshape(30_000, xb.shape[1])
+
+xq.shape # Should be (1, 128)
+xb.shape # Should be (30000, 128)
+```
+
+After all now we have `xq` and `xb` both query and base vectors.
+
+Now let's prepare our vector data for insertion
+```python Prepare vector data for insertion.
+embeds = [pj.RawEmbed(vector=x, meta=None) for x in xb.tolist()]
+```
+
+These will generate embeds for insertion. More information about how embeds are organized can be found in [Embeds Design](/design/embeds).
+
+Now we are good to go with insertion. 
+<Tip> `AsyncPulsejetClient` has `num_workers` that allows insert vectors parallel to server.</Tip>
+Let's insert these vectors:
+
+```python Insert vectors into Pulsejet
+await client.insert_multi("sift1m", embeds, num_workers=32)
+```
+
+First parameter is collection name and the second parameter is embeds we have just prepared for insertion now.
+This call will synchronously insert embeds one by one into vector store and won't wait for index generation and training execution.
+
+Now let's get into the search, after a short period, indexes should be started to be populated.
+Let's use our search vector to get some similarity matches.
+
+```python Search by a single vector
+res = await client.search_single("sift1m", xq[0], limit=100, filter=None)
+```
+
+In the above `limit` will give most similar top-K (in our case top 100) vectors for us. 
+
+<Warning>If distances are too apart you won't be getting 100 exact results in your experiments. This is because our clustering is too tight for your data or we don't have enough vector similarity to present you with the trained index.</Warning>
+
+Let's take a look at the result:
+```python Extract vectors
+res.status.element[0].vector
+```
+
+It will give you probably this output:
+
+```python Search output's first match
+[1.0, 5.0, 3.0, 20.0, 36.0, 4.0, 2.0, 2.0, 12.0, 41.0, 10.0, 1.0, 1.0, 8.0, 69.0, 23.0, 5.0, 12.0, 12.0, 20.0, 16.0, 9.0, 78.0, 39.0, 50.0, 0.0, 0.0, 10.0, 20.0, 10.0, 12.0, 9.0, 2.0, 0.0, 0.0, 25.0, 106.0, 69.0, 11.0, 5.0, 0.0, 0.0, 1.0, 45.0, 69.0, 109.0, 125.0, 16.0, 25.0, 18.0, 4.0, 0.0, 7.0, 23.0, 125.0, 115.0, 125.0, 7.0, 2.0, 0.0, 3.0, 9.0, 41.0, 76.0, 9.0, 7.0, 20.0, 34.0, 46.0, 45.0, 12.0, 14.0, 11.0, 13.0, 15.0, 125.0, 125.0, 29.0, 11.0, 3.0, 114.0, 125.0, 68.0, 51.0, 28.0, 10.0, 16.0, 12.0, 119.0, 44.0, 62.0, 12.0, 3.0, 6.0, 7.0, 34.0, 3.0, 1.0, 8.0, 7.0, 16.0, 15.0, 34.0, 33.0, 21.0, 28.0, 23.0, 36.0, 26.0, 26.0, 18.0, 12.0, 59.0, 92.0, 66.0, 31.0, 46.0, 29.0, 12.0, 7.0, 18.0, 1.0, 4.0, 6.0, 26.0, 47.0, 44.0, 34.0]
+```
+
+At this point you have all the tooling to integrate Pulsejet into your projects.
+
+<Tip>
+    ### Bigger datasets and performance
+    If you are thinking about loading **millions or billions of vectors** to Pulsejet, then it is better for you to use `AsyncPulsejetClient`. You can head to [Quickstart - Async Client](/devel/async_client) to reduce your time to insert vectors.
+</Tip>
