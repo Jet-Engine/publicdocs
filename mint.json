@@ -80,6 +80,7 @@
           "pages": [
             "devel/client",
             "devel/async_client",
+            "devel/rag_app_development",
             "devel/limitations"
           ],
           "icon": "campfire"
