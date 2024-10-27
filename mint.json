@@ -66,7 +66,7 @@
         "quickstart",
         
         {
-          "group": "Installation",
+          "group": "Server Installation",
           "pages": [
             "setup/self-hosted/docker",
             "setup/cloud/pulsejet-cloud",
@@ -76,17 +76,18 @@
           "icon": "down-to-bracket"
         },
         {
-          "group": "Development",
+          "group": "Usage",
           "pages": [
             "devel/client",
             "devel/async_client",
+            "devel/cluster_client",
             "devel/rag_app_development",
             "devel/limitations"
           ],
           "icon": "campfire"
         },
         {
-          "group": "Configuration",
+          "group": "Server Configuration",
           "pages": [
             "setup/config-options",
             "setup/environment-vars"

@@ -5,45 +5,33 @@ sidebarTitle: 'Quickstart'
 icon: 'play'
 ---
 
-Before we start, there are three ways to install PulsejetDB:
-* Locally as a [Python package from PyPi](/devel/client). This is local installation and meant to be used for rapid prototyping.
-* Remote as a [Docker](/setup/self-hosted/docker)
-* Cloud with:
-  * Self-hosting with AWS Marketplace (Upcoming)
-  * Self-hosting with Google Marketplace (Upcoming)
-
+Let's first install the database client. Client communicates with GRPC with Pulsejet.
 
 ## Client Interface
 
-Regardless of you will do rapid prototyping or use remote instance to develop your production grade models, you need to install PulsejetDB python package.
+Below you can find the way to install the pulsejet client.
 
 <AccordionGroup>
   <Accordion icon="python" title="Install Python package">
     Create a virtualenv or in activated virtualenv, issue this command:
     ```bash
-    pip install pulsejet
+    pip install pulsejet-client
     ```
-    We are making builds for these architectures for local package:
-    * Linux x86_64
-    * MacOS Aarch64
 
     For people who will always use Remote Installation, we will provide also thin client.
   </Accordion>
   <Accordion icon="arrow-down-to-arc" title="Import Pulsejet">
     Import Pulsejet in your Python code like:
     ```python
-    import pulsejet as pj
+    import pulsejet_client as pj
     ```
-    Now you are ready to go to work with either `local` installation or `remote` installation.
+    Now you are ready to go to work with database after running the docker image, or if you are using Pulsejet Cloud or any cloud installation.
 
-    **Choosing Local?**
-    <Tip>Now you are ready to jump to [Python Package](/devel/client) based setup.</Tip>
-    **Choosing Remote?**
+    **Run the database**
     <Tip>Head to [Docker-based](/setup/self-hosted/docker) setup.</Tip>
 
     <Note>
-      Note that regardless of your choice above you need to install `pulsejet` python package to interact with the server.
-      In addition to that, regardless of integration choice, you can select `sync` or `async` client.
+      Client comes in two flavors `sync` or `async` client.
     </Note>
   </Accordion>
 </AccordionGroup>

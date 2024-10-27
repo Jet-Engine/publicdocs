@@ -3,3 +3,142 @@ title: Configuration Options
 sidebarTitle: Configuration Options
 icon: 'gears'
 ---
+
+We will all configuration options for Pulsejet here.
+
+Pulsejet mainly configurable with `config.toml` file.
+
+Before proceeding, if you feel alien to terminology, please check the [terminology, design & concepts](/design).
+
+Example config toml is below:
+
+```toml
+rest_api_port = 47044
+grpc_api_port = 47045
+
+[storage]
+prod_name = "pulsejetdb"
+shard_id = 0
+basedir = ".database"
+
+[storage.hot_config]
+hot_storage_size = 10000000
+bloom_fp_rate = 0.001
+bloom_size = 1000000
+flush_size = 52428800
+bufferpool_to_resident_ratio = 0.2
+resident_writeback_interval_ms = 50000
+txn_timeout_ms = 500
+
+[storage.warm_config]
+max_background_jobs = 10
+wal_check_checksum = true
+wal_checkpoint_segments = 3
+wal_checkpoint_timeout_seconds = 300
+wal_log_gc_seconds = 3600
+wal_log_gc_percentage = 0.2
+
+[storage.cold_config]
+cold_enable = false
+writeback_frequency_secs = 300
+concurrent_requests = 100
+bucket_name = "pulsejet_cold"
+cloud_api = "GCP"
+base_path = "snapshots"
+```
+
+Let's explain the configuration options.
+
+## Ports
+
+There are two APIs, one is HTTP the other is GRPC.
+GRPC used for performance queries.
+
+```toml
+rest_api_port = 47044
+grpc_api_port = 47045
+```
+
+## Storage
+
+This section configures the storage options of this server.
+
+```toml
+[storage]
+prod_name = "pulsejetdb"
+shard_id = 0
+basedir = ".database"
+```
+
+* `prod_name`: Indicates the name of this instance. If you want to give a naming or advertise the instance with a name you can change this.
+* `shard_id`: This is both shard and node id. For single node cluster it can stay as 0. But for other instance you need to change it to identify the shards.
+    * If shard id is left zero in cluster mode, cluster will automatically recon and name the nodes in consistent hashing method.
+* `basedir`: This is the directory where all data will be stored. By default it is local directory of `.database/`.
+
+## Hot Storage
+
+Pulsejet consists of hot, warm and cold storage tiers. This config is for hot storage (in-memory) config.
+
+```toml
+[storage.hot_config]
+hot_storage_size = 10000000
+bloom_fp_rate = 0.001
+bloom_size = 1000000
+flush_size = 52428800
+bufferpool_to_resident_ratio = 0.2
+resident_writeback_interval_ms = 50000
+txn_timeout_ms = 500
+```
+
+* `hot_storage_size`: The amount of in-memory embeds that can be left in memory.
+* `bloom_fp_rate`: False-positive rate of the bloom-filter to be used to find related embeds.
+* `bloom_size`: Bloom filter size in general.
+* `flush_size`: Flush size of the hot to warm storage. Keeping it bigger than `hot_storage_size` will make it flush to disk in a single shot.
+* `bufferpool_to_resident_ratio`: How many embeds can be in the pre-buffer before goes into hot storage. For the example above it is `10000000 * 0.2`.
+* `resident_writeback_interval_ms`: How frequently hot storage will be committed to warm (on-disk).
+* `txn_timeout_ms`: Transactional commit timeout in milliseconds.
+
+## Warm Storage
+
+This is local mounted disk storage and it's configuration.
+
+```toml
+[storage.warm_config]
+max_background_jobs = 10
+wal_check_checksum = true
+wal_checkpoint_segments = 3
+wal_checkpoint_timeout_seconds = 300
+wal_log_gc_seconds = 3600
+wal_log_gc_percentage = 0.2
+```
+
+* `max_background_jobs`: How many background jobs to be used to writeback to disk.
+* `wal_check_checksum`: For WAL do we need to check the checksum on load.
+* `wal_checkpoint_segments`: Segment size per WAL log block.
+* `wal_checkpoint_timeout_seconds`: How frequently checkpointing should be made.
+* `wal_log_gc_seconds`: How frequently WAL GC needs to run.
+* `wal_log_gc_percentage`: Percentage of the GCed and resident WAL records. How much of them should be GCed is configurable by this.
+
+## Cold Storage
+
+This is long term archival storage system. It is for writing data to object storages.
+
+```toml
+[storage.cold_config]
+cold_enable = false
+writeback_frequency_secs = 300
+concurrent_requests = 100
+bucket_name = "pulsejet_cold"
+cloud_api = "GCP"
+base_path = "snapshots"
+```
+
+* `cold_enable`: Enable cold storage, this is the switch for it.
+* `writeback_frequency_secs`: How frequently we should write to object storage periodically.
+* `concurrent_requests`: How many concurrent write operation can go simultaneously.
+* `bucket_name`: Name of the bucket, `bucket` terminology can differ from one provider to another but the core model remains same.
+* `cloud_api`: Which cloud API to use. Possible options are:
+    * `GCP` for Google Cloud Storage.
+    * `AWS` for AWS S3.
+    * `Azure` for Azure Storage Blob.
+* `base_path`: The path that will be following the `bucket_name` that we will write the data into.
