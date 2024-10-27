@@ -1,16 +1,22 @@
 ---
-title: 'Quickstart - Local Client'
+title: 'Quickstart - Sync Client'
 description: 'Generic usage of sync Python client.'
 icon: 'python'
 ---
 
-After installing and importing client in the code. Now it is time for to start and connect to `local` instance.
+After installing and importing client in the code. You can create sync client with:
 
 ```python Create the client
-client = pj.PulsejetClient(location="local")
+client = pj.PulsejetClient()
 ```
 
-Above command will launch pulsejet in the background, and connect to it.
+For different host and port:
+
+```python Create the client with different host and port
+client = pj.PulsejetClient(host='combustiblelemon.pulsejet.io', port=34102)
+```
+
+## Creating Collection
 
 Since we will insert some vectors into our storage. We will build `VectorParams` which are indicating our
 vector configuration for our collection.
@@ -18,6 +24,11 @@ vector configuration for our collection.
 ```python Build vector configuration for our collection
 vector_params = pj.VectorParams(size=128, index_type=pj.IndexType.HNSW)
 ```
+
+<Note>
+For possible index types please head to [Index Types](/features/index_types).
+Please try out `ANODE` index, our new invention.
+</Note>
 
 In the above example, `size` indicates the vector size, and `index_type` is 
 one of the possible indexes that we have documented at [Index Types](/features/index_types).
@@ -32,6 +43,8 @@ You can learn more with [storage system doc](design/storage).
 client.create_collection("sift1m", vector_params)
 ```
 
+## List Collections
+
 Now we can take a look to existing collections in this list:
 
 ```python List collections
@@ -39,6 +52,8 @@ client.list_collections(filter=None)
 ```
 
 Filter indicates what to filter from the collection. This will give us a list of collections.
+
+## Fetch example data
 
 Now it is time to download `SIFT1M` dataset to our system as an example:
 
@@ -89,6 +104,8 @@ embeds = [pj.RawEmbed(vector=x, meta=None) for x in xb.tolist()]
 
 These will generate embeds for insertion. More information about how embeds are organized can be found in [Embeds Design](/design/embeds).
 
+## Inserting Vectors
+
 Now we are good to go with insertion. Let's insert these vectors:
 
 ```python Insert vectors into Pulsejet
@@ -98,12 +115,18 @@ client.insert_multi("sift1m", embeds)
 First parameter is collection name and the second parameter is embeds we have just prepared for insertion now.
 This call will synchronously insert embeds one by one into vector store and won't wait for index generation and training execution.
 
+## Searching Vectors
+
 Now let's get into the search, after a short period, indexes should be started to be populated.
 Let's use our search vector to get some similarity matches.
 
 ```python Search by a single vector
 res = client.search_single("sift1m", xq[0], limit=100, filter=None)
 ```
+
+<Info>
+You can search multiple vectors at the same time with `client.search_multi` method too.
+</Info>
 
 In the above `limit` will give most similar top-K (in our case top 100) vectors for us. 
 

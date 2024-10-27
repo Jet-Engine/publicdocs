@@ -9,11 +9,8 @@ PulsejetDB provides Docker image that facilitate running PulsejetDB in Docker co
 <Tip>
 PulsejetDB comes with full production ready optimized container.
 
-* `jetngine/pulsejet:latest` (or `jetngine/pulsejet`)
+* `jetngine/pulsejet:master` (or `jetngine/pulsejet`)
 It is the lightweight Docker image of PulsejetDB.
-
-* `jetngine/pulsejet-avx512:latest` (or `jetngine/pulsejet-avx512`)
-This one is optimized Docker image for newer x86_64 (2019 later) processors for PulsejetDB.
 
 </Tip>
 
@@ -29,16 +26,24 @@ Follow the steps to set up PulsejetDB in a Docker container.
 
 ### Install PulsejetDB
 
+If you want to pull the image first you can use:
+
+```
+docker pull jetngine/pulsejet:master
+```
+We have ARM and x86 builds.
+
 Run this command to create a Docker container with PulsejetDB:
 
 ```bash
-docker run --name pulsejet_container -p 47044-47045:47044-47045 jetngine/pulsejet
+docker run --name pulsejet_container -p 4000:4000 -p 47044-47045:47044-47045 jetngine/pulsejet
 ```
 
 Where:
 
 -   `docker run` is a native Docker command used to spin up a container.
 -   `--name pulsejet_container` defines a name for the container.
+-   `-p 4000:4000` exposes built-in dashboard.
 -   `-p 47044-47045:47044-47045` published 47044 and 47045 ports HTTP and GRPC ports respectively.
 -   `jetngine/pulsejet` is a Docker image provided by PulsejetDB. You can choose a different one from the list above.
 
@@ -51,7 +56,7 @@ Once the container is created, you can use the following commands:
 If you don't want to follow the logs and get the prompt back, add the `-d` flag that stands for *detach*.
 
 ```bash
-docker run --name pulsejet_container -d -p 47044-47045:47044-47045 jetngine/pulsejet
+docker run --name pulsejet_container -d -p 4000:4000 -p 47044-47045:47044-47045 jetngine/pulsejet
 ```
 </Tip>
 
@@ -59,11 +64,10 @@ docker run --name pulsejet_container -d -p 47044-47045:47044-47045 jetngine/puls
 If you want to persist your models and configurations in the host machine, run these commands:
 
 ```bash
-mkdir pulsejet_data
-docker run --name pulsejet_container -p 47044-47045:47044-47045 -v $(pwd)/pulsejet_data:/root/.database jetngine/pulsejet
+docker run --name pulsejet_container -p 4000:4000 -p 47044-47045:47044-47045 -v $(pwd)/pulselog:/.database jetngine/pulsejet
 ```
 
-Where `-v $(pwd)/pulsejet_data:/root/.database` maps the newly created folder `pulsejet_data` on the host machine to the `/root/.database` inside the container.
+Where `-v $(pwd)/pulselog:/.database` maps the newly created folder `pulselog` on the host machine to the `/.database` inside the container.
 </Tip>
 
 ### Custom configuration
